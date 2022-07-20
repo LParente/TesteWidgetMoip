@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Checkout Transparente - Boleto</title>
+    <meta name="author" content="Moip Pagamentos S/A" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <script type="text/javascript">
+        var funcaoSucesso = function(data) {
+            alert('Sucesso\n' + JSON.stringify(data));
+            window.open(data.url);
+        };
+
+        var funcaoFalha = function(data) {
+            alert('Falha\n' + JSON.stringify(data));
+        };
+
+        pagarBoleto = function() {
+            document.getElementById("MoipWidget").setAttribute("data-token", document.getElementById("dataToken").value);
+            var settings = {
+                "Forma": "BoletoBancario"
+            }
+            MoipWidget(settings);
+        }
+
+        pagarCartao = function() {
+            document.getElementById("MoipWidget").setAttribute("data-token", document.getElementById("dataToken").value);
+            var settings = {
+                "Forma": "CartaoCredito",
+                "Instituicao": "Visa",
+                "Parcelas": "1",
+                "CartaoCredito": {
+                    "Numero": "4000000000000004",
+                    "Expiracao": "12/30",
+                    "CodigoSeguranca": "123",
+                    "Portador": {
+                        "Nome": "Nome Sobrenome",
+                        "DataNascimento": "30/12/1987",
+                        "Telefone": "(11)3165-4020",
+                        "Identidade": "222.222.222-22"
+                    }
+                }
+            }
+            MoipWidget(settings);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="MoipWidget" data-token="" callback-method-success="funcaoSucesso" callback-method-error="funcaoFalha"></div>
+
+    <input type="text" placeholder="Data Token" id="dataToken" value="I2E062E2O0X6B2X071S2M5P501J0B4R6N5Q060A0U1M2U268G7L2S7P4X4O5" class="form-control" /></br>
+
+    <button id="pagarBoleto" onclick="pagarBoleto()"> Imprimir Boleto </button>
+    <button id="pagarCartao" onclick="pagarCartao()"> pagar Cartao </button>
+
+</body>
+<script type="text/javascript " src="https://assets.moip.com.br/scripts/jquery-1.7.min.js "></script>
+<script type='text/javascript' src='https://assets.moip.com.br/transparente/MoipWidget-v2.js' charset=ISO-8859-1 "></script>
+</html>
